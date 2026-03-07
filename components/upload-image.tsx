@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import { CldUploadWidget, CldImage } from 'next-cloudinary'
 import { getStartupsWithoutImage, handleDeleteImage, uploadImage } from "@/app/actions/image-upload";
 import { toast } from "sonner";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 interface UploadImageProps {
   id: string;
@@ -66,7 +65,7 @@ export function UploadImage() {
           ))}
 
         </select>
-        <CldUploadWidget uploadPreset="capstone" options={{ resourceType: 'image', showUploadMoreButton: false, singleUploadAutoClose: true, maxFileSize: 1024 * 1024 * 2 , cropping:true}} onSuccess={(result: any) => {
+        <CldUploadWidget uploadPreset="capstone" options={{ resourceType: 'image', showUploadMoreButton: false, singleUploadAutoClose: true, maxFileSize: 1024 * 1024 * 2, cropping: true }} onSuccess={(result: any) => {
           setImageUrl(result.info.secure_url);
           setPublicId(result.info.public_id);
         }} onError={(error) =>
