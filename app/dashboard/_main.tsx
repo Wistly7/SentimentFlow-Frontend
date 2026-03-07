@@ -65,15 +65,15 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
             <GSAPHover>
               <Card className="bg-card/80 backdrop-blur-sm border-border card-hover">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Positive Articles</CardTitle>
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Currently Positive Startups</CardTitle>
                   <TrendingUp className="h-4 w-4 text-green-500" />
                 </CardHeader>
                 <CardContent>
                   {!dashBoardData ? <div>
                     <Loader className="animate-spin" />
                   </div> : (<>
-                    <div className="text-2xl font-bold text-foreground">{dashBoardData.statusGrouping?.postiveCount}</div>
-                    <p className="text-xs text-muted-foreground">{dashBoardData.positiveTrendArticles >= 0 ? "+" + dashBoardData.positiveTrendArticles.toFixed(2) + "%" : dashBoardData.positiveTrendArticles.toFixed(2) + "%"} from last week</p>
+                    <div className="text-2xl font-bold text-foreground">{dashBoardData.startupSentimentGrouping?.positiveCount}</div>
+                    <p className="text-xs text-muted-foreground">out of {dashBoardData.startupSentimentGrouping?.totalCount} startups</p>
                   </>)}
                 </CardContent>
               </Card>
@@ -82,7 +82,7 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
             <GSAPHover>
               <Card className="bg-card/80 backdrop-blur-sm border-border card-hover">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Negative Articles</CardTitle>
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Currently Negative Startups</CardTitle>
                   <TrendingDown className="h-4 w-4 text-red-500" />
                 </CardHeader>
                 <CardContent>
@@ -90,8 +90,8 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
                     <Loader className="animate-spin" />
                   </div> :
                     <>
-                      <div className="text-2xl font-bold text-foreground">{dashBoardData.statusGrouping?.negativeCount}</div>
-                      <p className="text-xs text-muted-foreground">{dashBoardData.negativeTrendArticles >= 0 ? "+" + dashBoardData.negativeTrendArticles.toFixed(2) : dashBoardData.negativeTrendArticles.toFixed(2)}% from last week</p>
+                      <div className="text-2xl font-bold text-foreground">{dashBoardData.startupSentimentGrouping?.negativeCount}</div>
+                      <p className="text-xs text-muted-foreground">out of {dashBoardData.startupSentimentGrouping?.totalCount} startups</p>
                     </>
                   }
                 </CardContent>
