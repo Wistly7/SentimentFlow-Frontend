@@ -16,15 +16,15 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
     queryFn: () => fetchTrendingStartups({ token: token }),
     queryKey: ['trendingStartups-stats'],
     staleTime: 5 * 60 * 1000,
-    initialData:initalStartupsTrendingData?initalStartupsTrendingData:undefined,
+    initialData: initalStartupsTrendingData ? initalStartupsTrendingData : undefined,
     select: (data) => data ? data.trendingStartups : null
   });
-  
+
   const { data: dashBoardData, isFetching: isDashboardFetching, isLoading: isDashboardLoading } = useQuery({
     queryFn: () => fetchDashboardData({ token: token }),
     queryKey: ['dashBoard-stats'],
     staleTime: 5 * 60 * 1000,
-    initialData:initialDashBoardAnalyticsData?initialDashBoardAnalyticsData:undefined,
+    initialData: initialDashBoardAnalyticsData ? initialDashBoardAnalyticsData : undefined,
     select: (data) => data ? data.statsResult : null
   })
   const getPercentageValue = (initialValue: number, total: number) => {
@@ -34,7 +34,7 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
       100,
     )
   }
-  
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <WaterflowBackground />
@@ -73,7 +73,7 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
                     <Loader className="animate-spin" />
                   </div> : (<>
                     <div className="text-2xl font-bold text-foreground">{dashBoardData.statusGrouping?.postiveCount}</div>
-                    <p className="text-xs text-muted-foreground">{dashBoardData.positiveTrendArticles >= 0 ? "+" + dashBoardData.positiveTrendArticles + "%" : dashBoardData.positiveTrendArticles + "%"} from last week</p>
+                    <p className="text-xs text-muted-foreground">{dashBoardData.positiveTrendArticles >= 0 ? "+" + dashBoardData.positiveTrendArticles.toFixed(2) + "%" : dashBoardData.positiveTrendArticles.toFixed(2) + "%"} from last week</p>
                   </>)}
                 </CardContent>
               </Card>
@@ -198,31 +198,31 @@ export const DashboardPage: React.FC<{ initalStartupsTrendingData: TrendingStart
                     {isStartupLoading ?
                       <div className="flex justify-center items-center animate-spin">
                         <Loader className="animate-spin" size={30} />
-                      </div> : trendingStartupsData?.length===0?
-                      <div className="flex justify-center items-center text-center font-bold">
-                        No new Startups Articles this week
-                      </div>
-                      :(
-                        trendingStartupsData?.map((startup, index) => (
-                          <div
-                            key={startup.name + index.toString()}
-                            className="flex items-center justify-between p-3 rounded-lg bg-secondary/20"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                                <span className="text-sm font-bold text-accent">{index + 1}</span>
+                      </div> : trendingStartupsData?.length === 0 ?
+                        <div className="flex justify-center items-center text-center font-bold">
+                          No new Startups Articles this week
+                        </div>
+                        : (
+                          trendingStartupsData?.map((startup, index) => (
+                            <div
+                              key={startup.name + index.toString()}
+                              className="flex items-center justify-between p-3 rounded-lg bg-secondary/20"
+                            >
+                              <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                                  <span className="text-sm font-bold text-accent">{index + 1}</span>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-foreground">{startup.name}</p>
+                                  <p className={`text-sm text-muted-foreground`}>
+                                    Sentiment:{startup.current_sentiment > 0 && "+"}{startup.current_sentiment.toFixed(2)}
+                                  </p>
+                                </div>
                               </div>
-                              <div>
-                                <p className="font-medium text-foreground">{startup.name}</p>
-                                <p className={`text-sm text-muted-foreground`}>
-                                  Sentiment:{startup.current_sentiment > 0 && "+"}{startup.current_sentiment}
-                                </p>
-                              </div>
+
                             </div>
-                            
-                          </div>
-                        ))
-                      )}
+                          ))
+                        )}
 
 
 
