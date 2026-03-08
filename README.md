@@ -1,165 +1,183 @@
-# Startup Sentiment Analysis Platform
+# SentimentFlow — Frontend
 
-A full-stack, microservice-based intelligence platform to track, analyze, and visualize news sentiment for competing startups.
+A modern, full-stack intelligence platform to track, analyze, and visualize news sentiment for competing startups. Built with **Next.js**, **TypeScript**, and **React Query**.
 
-This project is not just a simple sentiment-tracker. It's a complete data pipeline designed to solve complex, real-world challenges in competitive analysis, including:
+> **Backend Repo →** [Wistly7/SentimentFlow-Backend](https://github.com/Wistly7/SentimentFlow-Backend)
 
-  * **Contextual Ambiguity:** Differentiates between a company ("BoAt") and a common noun ("boat").
-  * **Targeted Sentiment:** Correctly identifies that positive news for a competitor (like Zomato) is negative news for the company being tracked (like Swiggy).
-  * **High-Level Metrics:** Aggregates data into actionable insights like **Share of Voice (SoV)** and **Net Sentiment Score (NSS)**.
+---
 
-**Frontend Repo:** [Bhoumik09/sentiment-analysis-frontend](https://www.google.com/search?q=https://github.com/Bhoumik09/sentiment-analysis-frontend)
-**Backend Repo:** [Bhoumik09/sentiment-analysis-backend](https://www.google.com/search?q=https://github.com/Bhoumik09/sentiment-analysis-backend)
+## 📸 Screenshots
 
-**1)Login Page**
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7aecf42a-f5fb-4ef5-a841-451212b8f235" />
+**Login Page**
 
-**2)Signup Page**
-<img width="965" height="861" alt="image" src="https://github.com/user-attachments/assets/6e5503cc-b6f1-40be-91a2-6f248c68debb" />
+<img width="1920" height="1080" alt="Login Page" src="https://github.com/user-attachments/assets/7aecf42a-f5fb-4ef5-a841-451212b8f235" />
 
-**3)Sentiment Dashboard**
-<img width="1836" height="931" alt="image" src="https://github.com/user-attachments/assets/8b4b3346-ef40-44e3-abc8-532c644368b6" />
+**Signup Page**
 
-**4)Company List enabled with robust filters and search bar**
-<img width="1517" height="912" alt="image" src="https://github.com/user-attachments/assets/07fde588-70d7-4ddd-bb4a-5e51bda7aa85" />
+<img width="965" height="861" alt="Signup Page" src="https://github.com/user-attachments/assets/6e5503cc-b6f1-40be-91a2-6f248c68debb" />
 
-**5)News List enabled with robust filters and search bar**
-<img width="1526" height="908" alt="image" src="https://github.com/user-attachments/assets/c5ba50c6-f8ee-44f8-829e-b05ea4dadb2b" />
+**Sentiment Dashboard**
 
-**6)Company Specific Pages**
-<img width="1777" height="882" alt="image" src="https://github.com/user-attachments/assets/bf58a41a-b89d-4973-a5a2-4adfa7611c68" />
-<img width="1787" height="916" alt="image" src="https://github.com/user-attachments/assets/0a0f37b5-6860-48d0-8ab4-c13b51838e57" />
-<img width="1831" height="937" alt="image" src="https://github.com/user-attachments/assets/fcda5613-972b-4d1a-b8f1-97386b2bfdc7" />
-## 📊 Core Features
+<img width="1836" height="931" alt="Sentiment Dashboard" src="https://github.com/user-attachments/assets/8b4b3346-ef40-44e3-abc8-532c644368b6" />
 
-  * **Trending Dashboards:** See the top 4 startups of the week based on **article volume** and the top 4 "Sentiment Movers" based on **percentage sentiment change**.
-  * **Company-Specific Dashboard:** A detailed page for each startup showing its key metrics, competitor comparisons, and a fully paginated feed of its news.
-  * **Sentiment Moving Average:** The company page features a time-series graph plotting a 7-day or 30-day moving average of sentiment scores to smooth out daily noise and reveal long-term trends.
-  * **Competitor Analysis:** Visual dashboards for comparing competitors' Share of Voice (SoV) and Net Sentiment Score (NSS) over time.
-  * **Advanced Article Feed:** A central feed to browse all articles in the database, complete with server-side pagination and filters for industry, sentiment, and startup.
+**Company List — Filters & Search**
 
-## ✨ In-Depth Technical Features
+<img width="1517" height="912" alt="Company List" src="https://github.com/user-attachments/assets/07fde588-70d7-4ddd-bb4a-5e51bda7aa85" />
 
-This project was built with performance, security, and user experience in mind.
+**News Feed — Filters & Search**
 
-### 1\. High-Performance Caching with React Query
+<img width="1526" height="908" alt="News Feed" src="https://github.com/user-attachments/assets/c5ba50c6-f8ee-44f8-829e-b05ea4dadb2b" />
 
-The frontend uses **React Query (TanStack Query)** for all data fetching.
+**Company-Specific Dashboard**
 
-  * **Caching:** API calls (e.g., for the trending startups, the main article feed) are cached. If the user navigates away and comes back, the data is served instantly from cache while a fresh fetch runs silently in the background.
-  * **Reduced API Calls:** This drastically reduces the number of requests to the backend, making the app feel faster and reducing server load.
-  * **State Management:** It eliminates the need for complex global state (like Redux) for server state, simplifying the codebase.'
+<img width="1777" height="882" alt="Company Page 1" src="https://github.com/user-attachments/assets/bf58a41a-b89d-4973-a5a2-4adfa7611c68" />
+<img width="1787" height="916" alt="Company Page 2" src="https://github.com/user-attachments/assets/0a0f37b5-6860-48d0-8ab4-c13b51838e57" />
+<img width="1831" height="937" alt="Company Page 3" src="https://github.com/user-attachments/assets/fcda5613-972b-4d1a-b8f1-97386b2bfdc7" />
 
-### 2\. Efficient Searching & Pagination
+---
 
-  * **Debounced Searching:** The search bar in the article feed is debounced. This means an API call is only sent *after* the user stops typing (e.g., for 300ms), preventing the app from spamming the backend API on every keystroke.
-  * **Server-Side Pagination:** We display *all* news in the database. To handle this, all pagination is done on the **server** (in the Express.js backend). The frontend simply passes `page` and `limit` parameters. The backend uses Prisma's `skip` and `take` arguments to fetch *only* the 10-20 articles needed for that specific page, ensuring fast loads even with millions of articles.
+## ✨ Key Features
 
-### 3\. Targeted Sentiment Analysis
+| Feature | Description |
+| :--- | :--- |
+| **Trending Dashboards** | Top startups of the week by article volume and biggest sentiment movers by percentage change |
+| **Company Dashboard** | Per-company metrics, competitor comparisons, and a paginated news feed |
+| **Sentiment Moving Average** | 7-day / 30-day smoothed time-series graphs to reveal long-term trends |
+| **Competitor Analysis** | Side-by-side Share of Voice (SoV) and Net Sentiment Score (NSS) charts |
+| **Advanced Article Feed** | Centralized feed with server-side pagination, industry/sentiment/startup filters, and debounced search |
 
-This is the "secret sauce" of the project. A basic model fails when an article mentions multiple companies.
+---
 
-  * **Problem:** `"Swiggy's profits soar, beating Zomato."`
-  * **Basic Model:** `Sentiment: Positive` (Wrong for Zomato)
-  * **Our Solution:** We use a **Zero-Shot Classification** model. This allows us to ask *targeted* questions:
-      * **Q1:** What is the sentiment *for Swiggy*? (Labels: `['positive for Swiggy', 'negative for Swiggy']`) -\> **Result:** `positive for Swiggy`
-      * **Q2:** What is the sentiment *for Zomato*? (Labels: `['positive for Zomato', 'negative for Zomato']`) -\> **Result:** `negative for Zomato`
+## 🧠 How It Works
+
+### Secure Proxy Architecture (BFF)
+
+The Next.js server acts as a **Backend-for-Frontend** proxy. The user's browser never communicates directly with the data API — all requests go through Next.js API routes, which attach a secret API key before forwarding to the Express.js backend. This keeps the entire backend infrastructure hidden from the public internet.
+
+### Targeted Sentiment Analysis
+
+A basic sentiment model fails when an article mentions multiple companies. SentimentFlow uses **Zero-Shot Classification** to ask *targeted* questions per company:
+
+| Article | Question | Result |
+| :--- | :--- | :--- |
+| *"Swiggy's profits soar, beating Zomato."* | Sentiment *for Swiggy*? | ✅ Positive |
+| | Sentiment *for Zomato*? | ❌ Negative |
+
+### High-Performance Caching
+
+All data fetching is handled by **React Query (TanStack Query)**:
+
+- **Instant cache hits** — data is served from cache while a background refetch runs silently.
+- **Reduced API calls** — drastically fewer requests to the backend.
+- **No Redux needed** — server state is managed entirely via React Query.
+
+### Smart Searching & Pagination
+
+- **Debounced search** — API calls fire only after the user stops typing (~300 ms).
+- **Server-side pagination** — the backend uses Prisma's `skip`/`take` for efficient page-level queries, even with millions of articles.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Framework** | Next.js 16, React 18, TypeScript |
+| **Data Fetching** | React Query (TanStack Query) |
+| **Styling** | Tailwind CSS 4, Radix UI, Geist Font |
+| **Charts** | Recharts |
+| **Auth** | JWT (via `jose`), js-cookie |
+| **Media** | Cloudinary (next-cloudinary) |
+| **Validation** | Zod, React Hook Form |
+| **Animations** | GSAP |
+
+---
 
 ## 🏗️ System Architecture
 
-This project is built on a 3-tier microservice architecture to ensure security, scalability, and separation of concerns.
+```
+┌─────────────────────┐     ┌──────────────────────┐     ┌───────────────┐
+│   Next.js Frontend  │────▶│  Express.js Backend  │────▶│  PostgreSQL   │
+│   (UI & BFF Proxy)  │     │  (Secure API + RBAC) │     │  (via Prisma) │
+└─────────────────────┘     └──────────────────────┘     └───────────────┘
+                                                                ▲
+                                                                │
+                                                    ┌───────────┴──────────┐
+                                                    │  Python ETL Service  │
+                                                    │  (Sentiment Engine)  │
+                                                    └──────────────────────┘
+```
 
-### 1\. Next.js Frontend (The "Face" & Proxy)
+---
 
-The user-facing dashboard. Its server acts as a **secure proxy** (a "Backend-for-Frontend").
+## 🚀 Getting Started
 
-  * **How it works:** The user's browser *never* talks to the data API. It only talks to the Next.js server's API routes (e.g., `/api/trending`). The Next.js server then secretly calls the *real* Express backend, adding a secret API key.
-  * **Why:** This hides our entire backend infrastructure and protects our database from the public internet.
+### Prerequisites
 
-### 2\. Express.js API (The "Secure Guardian")
+- Node.js ≥ 18
+- The [SentimentFlow-Backend](https://github.com/Wistly7/SentimentFlow-Backend) running locally or deployed
 
-This is the *only* service that is allowed to talk to the database.
+### Installation
 
-  * **Role-Based Access Control (RBAC):** This backend has middleware that checks for user roles (e.g., `User` vs. `Admin`). `Admin` roles might have permission to delete articles or manage startups, while `User` roles are read-only. The frontend also checks this role to hide or show UI elements (like a "Delete" button).
-  * **Advanced Queries:** This service runs the complex, raw SQL queries (using `prisma.$queryRaw`) needed to calculate statistics like weekly article counts and sentiment percentage changes.
+```bash
+git clone https://github.com/Wistly7/SentimentFlow-Frontend.git
+cd SentimentFlow-Frontend
+npm install
+```
 
-### 3\. Python ETL Service (The "Brains")
+### Environment Variables
 
-A separate, background worker service that performs all the heavy lifting. It runs on a schedule to fetch, analyze, and load data into the database.
+Create a `.env.local` file in the project root:
 
-  * **Smart Fetching:** Runs 3-5 *broad, consolidated queries* for entire sectors (e.g., "Fintech", "EdTech") to reduce API calls.
-  * **Smart Filtering:** Uses the **Aho-Corasick algorithm** (`pyahocorasick`) to find all 30+ startup names in a batch of articles in a single, ultra-fast pass.
-  * **Smart Saving:** Saves data to our **Many-to-Many** schema, correctly linking one article to multiple startups with different sentiments.
+```env
+BACKEND_URL=http://localhost:5000
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-cloudinary-api-key
+CLOUDINARY_API_SECRET=your-cloudinary-api-secret
+JWT_SECRET_KEY=your-jwt-secret
+```
 
-## 🛠️ Technology Stack
+### Run
 
-| Component | Technology |
+```bash
+npm run dev
+```
+
+The app will be live at **http://localhost:3000**.
+
+---
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── (auth)/          # Login & Signup pages
+│   ├── actions/         # Server actions
+│   ├── dashboard/       # Dashboard pages (trending, company, news feed)
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx         # Landing page
+├── components/          # Reusable UI components (Radix-based)
+├── context/             # React context providers
+├── hooks/               # Custom React hooks
+├── lib/                 # Utilities and helpers
+├── middleware.ts        # Auth middleware
+├── public/              # Static assets
+├── styles/              # Additional stylesheets
+└── types/               # TypeScript type definitions
+```
+
+---
+
+## 🔗 Related Repositories
+
+| Repository | Description |
 | :--- | :--- |
-| **Frontend** (UI & Proxy) | Next.js (React), TypeScript, **React Query**, Tailwind CSS, Recharts |
-| **Backend** (Secure API) | Node.js, Express.js, TypeScript, **Prisma**, PostgreSQL |
-| **ETL** (Data Pipeline) | Python, Hugging Face `transformers`, `pyahocorasick`, `psycopg2` |
-| **Database** | PostgreSQL |
-| **News API** | [NewsAPI.org](https://newsapi.org/) (or similar) |
+| [SentimentFlow-Backend](https://github.com/Wistly7/SentimentFlow-Backend) | Express.js API — handles auth, RBAC, and all database operations |
+| [SentimentFlow-ETL](https://github.com/SoumilMalik24/SentimentFlow-ETL) | Python ETL service — news fetching, sentiment analysis, and data loading |
 
-## 🚀 Getting Started (Local Setup)
+---
 
-To run the full system, you must run all three components (Database, Backend, Frontend) plus the Python script.
+## 📜 License
 
-### 1\. Database
-
-1.  Install and run [PostgreSQL](https://www.postgresql.org/).
-2.  Create a new database (e.g., `sentiment_db`).
-
-### 2\. Backend (Express.js)
-
-1.  Clone the backend repo:
-    ```sh
-    git clone https://github.com/Bhoumik09/sentiment-analysis-backend.git
-    cd sentiment-analysis-backend
-    ```
-2.  Install dependencies: `npm install`
-3.  Create a `.env` file:
-    ```.env
-    
-    DATABASE_URL="postgresql://YOUR_USER:YOUR_PASSWORD@localhost:5432/sentiment_db"
-    PORT=8000
-    SECRET_KEY="your-secret-key"
-    NODE_ENV="development"
-    ```
-4.  Run migrations to create the database schema:
-    ```sh
-    npx prisma migrate dev --name "init"
-    ```
-5.  Seed the `Sector` table (run the `createSectors.ts` script you made).
-6.  Run the backend server:
-    ```sh
-    npm run dev
-    ```
-    Your API will be live at `http://localhost:8000`.
-
-### 3\. Frontend (Next.js)
-
-1.  In a **new terminal**, clone the frontend repo:
-    ```sh
-    git clone https://github.com/Bhoumik09/sentiment-analysis-frontend.git
-    cd sentiment-analysis-frontend
-    ```
-2.  Install dependencies: `npm install`
-3.  Create a `.env.local` file:
-    ```.env.local
-      BACKEND_URL=http://localhost:5000
-    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME='your cloud name'
-    CLOUDINARY_API_KEY=your-cloudinary-api
-    CLOUDINARY_API_SECRET=your-cloudinary-api-secret
-     JWT_SECRET_KEY="your jwt secret:
-    ```
-4.  Run the frontend server:
-    ```sh
-    npm run dev
-    ```
-    Your app will be live at `http://localhost:3000`.
-
-### 4\. ETL Service (Python)
-
-Refer Repo **https://github.com/SoumilMalik24/SentimentFlow-V2** by **github.com/SoumilMalik24**
-
+This project is licensed under the ISC License.
